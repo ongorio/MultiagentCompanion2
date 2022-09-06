@@ -44,7 +44,7 @@ class AgentSerializer(serializers.Serializer):
 
 
 class SimulationSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
+    pk = serializers.IntegerField(read_only=True)
     track_id = serializers.CharField(max_length=255, validators=[UniqueValidator(Simulation.objects.all(), 'Id already exists')])
     carrieout_date = serializers.DateField(default=date.today) # 'yyyy-mm-dd'
     agent_count = serializers.IntegerField(read_only=True)
