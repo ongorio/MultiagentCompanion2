@@ -3,20 +3,15 @@
 
 {% block content %}
 
-    <h1>MultiAgent</h1>
-    <h4>Recent Simulations</h4>
+    <h1 class="text-center">MultiAgent</h1>
+
+    <div class="d-flex justify-content-between">
+        <h4 class="m">Recent Simulations</h4>
+        <a href="{% url 'sims_list' %}" class="btn btn-outline-secondary">View All</a>
+    </div>
     <hr>
 
-
-    <a href="{% url 'sims_list' %}">View All</a>
-
-    <br><br>
-    {% for sim in sims %}
-        
-        <h5>{{ sim.track_id }}</h5>
-        <a href="{% url 'sim_detail' id=sim.pk %}">View</a>
-
-    {% endfor %}
+    {% include '_sims_list_snippet.html' with sims=sims %}
 
 
 

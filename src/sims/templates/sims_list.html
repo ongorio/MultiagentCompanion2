@@ -4,14 +4,6 @@
     <h1>Simulations</h1>
     <hr>
 
-    {% for sim in sims %}
-    <div>
-
-        <strong>ID:</strong> {{ sim.track_id }}
-        <strong>Date:</strong> {{ sim.carrieout_date }}
-        <a href="{% url 'sim_detail' id=sim.pk %}">View</a>
-    </div>
-    <br><br>
-    {% endfor %}
+    {% include '_sims_list_snippet.html' with sims=sims %}
 
 {% endblock %}

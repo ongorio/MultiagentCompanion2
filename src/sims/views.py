@@ -7,7 +7,7 @@ def index(request):
     context = {}
 
     sims = Simulation.objects.all().order_by('-carrieout_date')[:5]
-    print(sims)
+    # print(sims)
     context['sims'] = sims
 
     return render(request, 'index.html', context)

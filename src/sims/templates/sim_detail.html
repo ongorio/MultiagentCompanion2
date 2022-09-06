@@ -2,31 +2,45 @@
 
 {% block content %}
 
-        <h2>{{ sim.track_id }}</h2>
-        <h5><strong>Date:</strong> {{ sim.carrieout_date }}</h5>
-        <a href="{% url 'sim_delete' id=sim.pk %}">Delete Simulation</a>
-        <table>
-            <thead>
-                <tr>
-                    <th>Total Agents</th>
-                    <th>Finished Agents</th>
-                    <th>Average Time</th>
-                    <th>Total Colisions</th>
-                </tr>
-            </thead>
 
-            <tbody>
-                <tr>
-                    <td>{{ sim.agent_count }}</td>
-                    <td>{{ sim.finished_agents }}</td>
-                    <td>{{ sim.average_agent_time|floatformat:2 }}</td>
-                    <td>{{ sim.total_colisions }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="bg-light my-4 p-3 shadow">
 
-        <hr>
+        <h2 class="text-center">Simulation: {{ sim.track_id }}</h2>
+        <h6><strong>Date:</strong> {{ sim.carrieout_date }}</h6>
+        <a href="{% url 'sim_delete' id=sim.pk %}" class="btn btn-danger btn-sm">Delete Simulation</a>
+    </div>
 
+
+
+    <div class="mt-4">
+        <button id="kpiBtn">KPIs</button>
+        <button id="agentsBtn">Agents</button>
+    </div>
+    <hr>
+
+    <table id="kpis-table" class="table table-striped-columns table-bordered text-center">
+        <thead>
+            <tr>
+                <th>Total Agents</th>
+                <th>Finished Agents</th>
+                <th>Average Time</th>
+                <th>Total Colisions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td class="fs-1">{{ sim.agent_count }}</td>
+                <td class="fs-1">{{ sim.finished_agents }}</td>
+                <td class="fs-1">{{ sim.average_agent_time|floatformat:2 }}</td>
+                <td class="fs-1">{{ sim.total_colisions }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <div id="agents-div" class="hidden">
         <h4>Agents</h4>
         {% for agent in sim.agents.all %}
             <strong>ID:</strong> {{ agent.agent_id }} <br>
@@ -35,6 +49,28 @@
             <strong>Finished?:</strong> {{ agent.finished }} <br>
             <br>
         {% endfor %}
+    </div>
 
+
+    <script>
+        let kpiBtn = document.getElementById('kpiBtn');
+        let agentsBtn = document.getElementById('agentsBtn');
+        let agentsDiv = document.getElementById('agents-div');
+        let kpiTable = document.getElementById('kpis-table')
+
+        kpiBtn.addEventListener('click', function(){
+            // console.log('kpi showing');
+            kpiTable.classList.remove('hidden');
+            agentsDiv.classList.add('hidden');
+        });
+        
+        
+        agentsBtn.addEventListener('click', function(){
+            // console.log('agents showing');
+            kpiTable.classList.add('hidden');
+            agentsDiv.classList.remove('hidden');
+        });
+
+    </script>
 
 {% endblock %}
