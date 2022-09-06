@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <h2>{{ sim.track_id }}</h2>
+        <h5><strong>Date:</strong> {{ sim.carrieout_date }}</h5>
+        <a href="{% url 'sim_delete' id=sim.pk %}">Delete Simulation</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Total Agents</th>
+                    <th>Finished Agents</th>
+                    <th>Average Time</th>
+                    <th>Total Colisions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>{{ sim.agent_count }}</td>
+                    <td>{{ sim.finished_agents }}</td>
+                    <td>{{ sim.average_agent_time|floatformat:2 }}</td>
+                    <td>{{ sim.total_colisions }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <h4>Agents</h4>
+        {% for agent in sim.agents.all %}
+            <strong>ID:</strong> {{ agent.agent_id }} <br>
+            <strong>Colisions:</strong> {{ agent.colisions }} <br>
+            <strong>Total Time:</strong> {{ agent.total_time }} <br>
+            <strong>Finished?:</strong> {{ agent.finished }} <br>
+            <br>
+        {% endfor %}
+
+
+{% endblock %}

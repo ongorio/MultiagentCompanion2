@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <h1>MultiAgent</h1>
+    <h4>Recent Simulations</h4>
+    <hr>
+
+
+    <a href="{% url 'sims_list' %}">View All</a>
+
+    <br><br>
+    {% for sim in sims %}
+        
+        <h5>{{ sim.track_id }}</h5>
+        <a href="{% url 'sim_detail' id=sim.pk %}">View</a>
+
+    {% endfor %}
+
+
+
+{% endblock %}

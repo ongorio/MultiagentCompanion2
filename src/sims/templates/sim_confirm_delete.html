@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h2>Do you wish to delete Simulation {{ sim.track_id }}</h2>
+    <p>It will permantly delete all records from it, including agents' records</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete">
+        <a href="{% url 'sim_detail' id=sim.pk %}">Cancel</a>
+
+    </form>
+
+{% endblock %}

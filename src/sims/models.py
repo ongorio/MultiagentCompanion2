@@ -19,7 +19,6 @@ class Simulation(models.Model):
         return f'<Simulation> {self.track_id}'
 
 
-
     @property
     def agent_count(self):
         total = self.agents.all().count()
@@ -38,10 +37,11 @@ class Simulation(models.Model):
     def average_agent_time(self):
         agents = self.agents.filter(finished=True)
 
-        if agents.count():
+        try:
             total = sum([agent.total_time for agent in agents]) / agents.count()
             return total
-        return 0
+        except ZeroDivisionError:
+            return 0
     
 
     @property

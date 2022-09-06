@@ -2,3 +2,5 @@ db.sqlite3
 
 src/sims/migrations/*
 !src/sims/migrations/__init__.py
+src/api/migrations/*
+!src/api/migrations/__init__.py
