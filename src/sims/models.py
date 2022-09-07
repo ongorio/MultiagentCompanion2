@@ -2,7 +2,7 @@ from django.db import models
 from datetime import date
 
 class Simulation(models.Model):
-    track_id = models.CharField('Tracking ID',max_length=255, unique=True)
+    track_id = models.CharField('Tracking ID',max_length=255, unique=True, null=True, blank=True)
     carrieout_date = models.DateField('Carrie Out Date', default=date.today)
 
 

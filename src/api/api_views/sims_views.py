@@ -3,8 +3,10 @@ from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 
-from sims.serializers import SimulationSerializer, AgentSerializer
+from sims.serializers import SimulationSerializer, AgentSerializer, SimCreateSerializer
 from sims.models import Agent, Simulation
+
+from datetime import date
 
 
 @api_view(['GET', 'POST'])
@@ -16,18 +18,14 @@ def sim_list(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
         
-        if type(data) == list:
-            serializer = SimulationSerializer(data=data, many=True)
-        else:
-            serializer = SimulationSerializer(data=data)
+            sim = Simulation.objects.create(carrieout_date=date.today())
+            sim.track_id = f"SIM {sim.pk}"
+            sim.save()
 
-
-        if serializer.is_valid():
-            serializer.save()
+            serializer = SimCreateSerializer(sim)
+        
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

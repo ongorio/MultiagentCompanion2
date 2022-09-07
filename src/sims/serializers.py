@@ -65,3 +65,8 @@ class SimulationSerializer(serializers.Serializer):
         instance.save()
 
         return instance
+
+
+class SimCreateSerializer(serializers.Serializer):
+    pk = serializers.IntegerField(read_only=True)
+    track_id = serializers.CharField(max_length=255, read_only=True)
