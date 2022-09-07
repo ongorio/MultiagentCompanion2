@@ -17,7 +17,13 @@ def sim_list(request):
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = SimulationSerializer(data=data, many=True)
+        
+        if type(data) == list:
+            serializer = SimulationSerializer(data=data, many=True)
+        else:
+            serializer = SimulationSerializer(data=data)
+
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -67,12 +73,15 @@ def agent(request, pk):
     elif request.method == 'POST':
         data = JSONParser().parse(request)
         
-        for item in data:
-            item['simulation_id'] = sim.pk
 
+        if type(data) == list:
+            for item in data:
+                item['simulation_id'] = sim.pk
+            serializer = AgentSerializer(data=data, many=True)
+        else:
+            data['simulation_id'] = sim.pk
+            serializer = AgentSerializer(data=data)
 
-        serializer = AgentSerializer(data=data, many=True)
-        serializer.simulation_id = sim
         if serializer.is_valid():
             serializer.save(sim=sim)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
